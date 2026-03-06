@@ -2,10 +2,17 @@ import { DatePipe, NgOptimizedImage } from '@angular/common';
 import { Component, computed, input, linkedSignal, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { uiCard } from '../../shared/ui-card';
+import { ClickLogger } from '../../shared/directives/click-logger';
 
 @Component({
   selector: 'app-event-card',
   imports: [DatePipe, RouterLink, NgOptimizedImage, uiCard],
+  hostDirectives: [
+    {
+      directive: ClickLogger,
+      inputs: ['eventName: trackingId'],
+    },
+  ],
   template: `
     <app-ui-card>
       <!-- TODO: Add Image -->
@@ -49,6 +56,8 @@ import { uiCard } from '../../shared/ui-card';
 
         <div class="flex justify-between items-center mt-4">
           <button
+            appClickLogger
+            eventName="Liked Event"
             (click)="toggleFavorite()"
             [class.text-red-500]="isFavorite()"
             class="text-gray-400 hover:text-red-500 transition-colors cursor-pointer"
