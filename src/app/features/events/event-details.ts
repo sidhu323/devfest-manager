@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 import { CartService } from '../../core/cart.service';
 import { TabGroup } from '../../shared/tabs/tab-group';
 import { Tab } from '../../shared/tabs/tab';
+import { BooksStore } from '../../core/todo.store';
 
 @Component({
   selector: 'app-event-details',
@@ -110,6 +111,16 @@ import { Tab } from '../../shared/tabs/tab';
 export class EventDetails {
   private readonly eventsService = inject(EventsService);
   private readonly cartService = inject(CartService);
+
+  private readonly bookStore = inject(BooksStore);
+
+  constructor() {
+    this.bookStore.books();
+    this.bookStore.freeBooks();
+    this.bookStore.totalBooks();
+
+    this.bookStore.addBook({ id: '1', title: 'A book', price: 4000 });
+  }
 
   readonly id = input.required<string>();
 
